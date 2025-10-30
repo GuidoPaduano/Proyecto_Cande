@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0e0f12" />
+  <title>Paisaje del Ánimo – p5.js</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- p5.js + p5.sound -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/addons/p5.sound.min.js"></script>
+</head>
+<body>
+  <!-- Landing (documento en HTML/CSS que explica el proyecto) -->
+  <header class="landing">
+    <h1>Paisaje del Ánimo</h1>
+    <p class="lead">
+      Autorretrato interactivo donde <strong>voz</strong> y <strong>respiración</strong> se convierten en un
+      <em>paisaje generativo</em>. Hecho con <strong>p5.js</strong>.
+    </p>
+
+    <section class="grid cols-2">
+      <div>
+        <h2>Concepto</h2>
+        <p>
+          Cada persona “suena” distinto; esa energía interior se vuelve color y forma. La
+          amplitud del audio moldea montañas y olas, y con la <strong>voz</strong> podés
+          <em>“pintar” tinta viva</em> que queda en el lienzo. También podés intervenir con el mouse.
+        </p>
+
+        <h3>Modos</h3>
+        <ul class="bullets">
+          <li><strong>Paisaje</strong>: dibuja casa, árbol, montañas y sol. El color reacciona a la voz: <em>azul</em> con voz baja → <em>rojo</em> con voz alta (degradé continuo).</li>
+          <li><strong>Figuras</strong>: contornos (montaña/árbol/casa) con partículas que “corren” por el borde.</li>
+          <li><strong>Abstracto</strong>: pinceladas generativas impulsadas por la voz.</li>
+        </ul>
+
+        <h3>Objetivos</h3>
+        <ul class="bullets">
+          <li>Explorar identidad sonora y visual.</li>
+          <li>Diseñar una UI mínima, clara y accesible.</li>
+          <li>Generar capturas exportables (PNG) como bitácora visual.</li>
+        </ul>
+
+        <h3>Requerimientos</h3>
+        <ul class="bullets">
+          <li>p5.js + p5.sound</li>
+          <li>Micrófono (opcional, tiene “Modo demo”)</li>
+          <li>Navegador en <em>localhost</em> o HTTPS para permisos de mic</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Moodboard</h2>
+        <div class="moodboard">
+          <div class="mbox">ondas</div>
+          <div class="mbox">acuarelas</div>
+          <div class="mbox">ruido perlin</div>
+          <div class="mbox">paleta calma</div>
+          <div class="mbox">paleta energía</div>
+          <div class="mbox">líneas fluidas</div>
+        </div>
+
+        <h3>Atajos</h3>
+        <ul class="bullets">
+          <li><strong>P</strong>: Pausar/Reanudar</li>
+          <li><strong>S</strong>: Guardar PNG</li>
+          <li><strong>Q</strong>: Terminar obra</li>
+          <li><strong>R</strong>: Borrar capa persistente</li>
+          <li><strong>C</strong>: Cambiar paleta</li>
+          <li><strong>H</strong>: Mostrar/Ocultar HUD</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="cta">
+      <button id="abrirObra" class="btn">Abrir obra</button>
+      <small class="credits">
+        Créditos: Diseño &amp; desarrollo — <em>Tu nombre</em>. Biblioteca: p5.js.
+      </small>
+    </div>
+  </header>
+
+  <!-- Contenedor del lienzo p5 (se muestra al abrir la obra) -->
+  <main id="app" class="app oculto"><!-- p5 inyecta el canvas y la UI --></main>
+
+  <!-- Footer del sitio -->
+  <footer class="site-footer" aria-label="Créditos del sitio">
+    <span>CREADO POR CANDELA RIVAS</span>
+  </footer>
+
+  <script src="sketch.js"></script>
+  <script>
+    // Mostrar/ocultar la obra desde la landing
+    const btn = document.getElementById('abrirObra');
+    const landing = document.querySelector('.landing');
+    const app = document.getElementById('app');
+    btn.addEventListener('click', () => {
+      landing.classList.add('oculto');
+      app.classList.remove('oculto');
+      // Aviso al sketch que arranque en estado "intro"
+      window.__arrancarSketch && window.__arrancarSketch();
+    });
+  </script>
+</body>
+</html>

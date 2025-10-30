@@ -1,0 +1,142 @@
+:root{
+    --bg:#0e0f12; --bg2:#12151b; --fg:#e8e9ee; --muted:#9aa0a6;
+    --btn:#2a2e37; --accent:#3b7ddd; --line:#2b3038; --chip:#1e232b;
+}
+*{ box-sizing:border-box; }
+html,body{
+  margin:0; padding:0; background:var(--bg); color:var(--fg);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
+}
+
+.lead{ color:var(--fg); opacity:.9; max-width:65ch; }
+
+.landing{ max-width:1100px; margin:40px auto; padding:24px; }
+h1{ margin:0 0 10px; font-size:clamp(28px,5vw,44px); }
+h2{ margin:22px 0 8px; font-size:20px; }
+h3{ margin:16px 0 6px; font-size:16px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+p{ line-height:1.55; }
+ul.bullets{ padding-left:18px; color:var(--fg); opacity:.9; }
+ul.bullets li{ margin:4px 0; }
+
+.grid{ display:grid; gap:24px; }
+.cols-2{ grid-template-columns: 1fr; }
+@media(min-width:900px){ .cols-2{ grid-template-columns: 1fr 1fr; } }
+
+.moodboard{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.mbox{
+  background:linear-gradient(135deg,var(--bg2),#1b212b);
+  border:1px solid var(--line); border-radius:12px; padding:22px; text-align:center;
+  color:#cdd3dc; font-size:13px; text-transform:uppercase; letter-spacing:.06em;
+}
+
+/* Botones generales y variante .btn (para el de la landing) */
+button, .btn{
+  background:var(--accent); color:white; border:0; padding:12px 20px;
+  border-radius:10px; font-weight:600; cursor:pointer;
+}
+button:hover, .btn:hover{ filter:brightness(1.08); }
+.cta{ margin-top:22px; display:flex; align-items:center; gap:14px; }
+.credits{ color:var(--muted); }
+
+.app{ position:relative; width:100%; height:100vh; }
+.oculto{ display:none; }
+
+/* Asegura que el canvas no tenga márgenes inesperados */
+#app canvas{ display:block; }
+
+/* =========================
+   UI DOM de la obra (panel)
+   ========================= */
+.controls{
+  position:absolute; left:18px; top:18px; z-index:10000; display:flex; gap:8px; flex-wrap:wrap;
+  max-width:min(46vw, 560px);
+  background:rgba(8,10,16,.55); padding:10px; border:1px solid var(--line); border-radius:12px; backdrop-filter: blur(6px);
+}
+.controls select,
+.controls input[type="checkbox"],
+.controls input[type="range"],
+.controls button{
+  background:var(--chip); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:6px 8px;
+}
+.controls .chip{ background:var(--chip); padding:6px 8px; border-radius:8px; border:1px solid var(--line); }
+
+@media (max-width: 900px){
+  .controls{ left:8px; right:8px; top:8px; max-width:unset; }
+}
+
+/* ---- Alternativa previa de UI (si en algún momento usás .p5ui/toggleUI) ---- */
+.p5ui{
+  position:fixed; z-index:9999;
+  right:16px; bottom:16px;
+  display:flex; flex-wrap:wrap; gap:8px;
+  max-width:min(46vw, 520px);
+  background:linear-gradient(135deg,#0b0d11aa,#0b0d11aa);
+  border:1px solid var(--line); padding:10px; border-radius:12px; backdrop-filter: blur(6px);
+}
+@media (max-width: 900px){
+  .p5ui{ max-width:92vw; right:8px; left:8px; bottom:8px; }
+}
+.p5ui button, .p5ui select, .p5ui input[type="range"], .p5ui label, .p5ui input[type="checkbox"]{
+  background:var(--chip); color:var(--fg); border:1px solid var(--line);
+  padding:8px 10px; border-radius:8px; font-size:14px;
+}
+.p5ui label{ padding:8px 10px; display:inline-flex; align-items:center; gap:6px; }
+.p5ui .sep{ width:1px; background:var(--line); margin:0 6px; }
+
+/* Botón flotante para mostrar/ocultar la UI (tecla U también) */
+.toggleUI{
+  position:fixed; z-index:11; right:16px; bottom: calc(16px + 64px);
+  background:var(--accent); color:#fff; border:0; padding:8px 10px; border-radius:999px;
+  font-weight:600; cursor:pointer; box-shadow:0 6px 24px #0009;
+}
+@media (max-width: 900px){
+  .toggleUI{ right:12px; bottom: calc(12px + 64px); }
+}
+
+/* Mensaje tipo toast */
+.banner{
+  position:fixed; top:10px; left:50%; transform:translateX(-50%);
+  padding:8px 12px; border-radius:8px; background:#000c; color:#fff; font-size:12px;
+  border:1px solid #333; z-index:10001;
+}
+
+/* Overlay de ayuda / HUD */
+.help{
+  position:fixed; right:12px; bottom:12px; background:#000c; color:#fff; font-size:12px;
+  border:1px solid var(--line); padding:10px 12px; border-radius:10px; max-width:260px; z-index:10001;
+}
+
+/* HUD numérico */
+.hud{
+  position:fixed; left:12px; bottom:12px; z-index:10001;
+  background:#000b; color:#fff; padding:8px 12px; border-radius:10px; border:1px solid var(--line);
+  font:12px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Preview en la pantalla de fin */
+.endbox{
+  position:fixed; inset:0; display:grid; place-items:center; gap:12px; padding:24px;
+}
+.endbox img{
+  max-width:min(90vw,1000px); max-height:70vh; border-radius:12px; border:1px solid var(--line);
+  box-shadow:0 10px 40px #000a;
+}
+.endbox .actions{ display:flex; gap:10px; }
+
+/* =========================
+   Footer del sitio
+   ========================= */
+.site-footer{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  display:grid; place-items:center;
+  padding:10px 12px;
+  background:rgba(14,15,18,0.85);
+  color:var(--fg);
+  border-top:1px solid var(--line);
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:12px;
+  z-index:10002; /* por encima de hud/help (10001) */
+}
