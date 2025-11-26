@@ -3,105 +3,173 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0e0f12" />
+  <meta name="theme-color" content="#020617" />
   <title>Paisaje del Ánimo – p5.js</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- p5.js + p5.sound -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/addons/p5.sound.min.js"></script>
 </head>
 <body>
-  <!-- Landing (documento en HTML/CSS que explica el proyecto) -->
-  <header class="landing">
-    <h1>Paisaje del Ánimo</h1>
-    <p class="lead">
-      Autorretrato interactivo donde <strong>voz</strong> y <strong>respiración</strong> se convierten en un
-      <em>paisaje generativo</em>. Hecho con <strong>p5.js</strong>.
-    </p>
+  <div class="bg-gradient"></div>
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+  <div class="noise-overlay"></div>
 
-    <section class="grid cols-2">
-      <div>
-        <h2>Concepto</h2>
-        <p>
-          Cada persona “suena” distinto; esa energía interior se vuelve color y forma. La
-          amplitud del audio moldea montañas y olas, y con la <strong>voz</strong> podés
-          <em>“pintar” tinta viva</em> que queda en el lienzo. También podés intervenir con el mouse.
-        </p>
+  <div class="page-shell">
+    <header class="landing">
+      <div class="hero">
+        <section class="hero-main">
+          <div class="hero-badge-row">
+            <span class="hero-badge">Obra interactiva</span>
+            <span class="hero-badge hero-badge-outline">Hecha con p5.js</span>
+          </div>
 
-        <h3>Modos</h3>
-        <ul class="bullets">
-          <li><strong>Paisaje</strong>: dibuja casa, árbol, montañas y sol. El color reacciona a la voz: <em>azul</em> con voz baja → <em>rojo</em> con voz alta (degradé continuo).</li>
-          <li><strong>Figuras</strong>: contornos (montaña/árbol/casa) con partículas que “corren” por el borde.</li>
-          <li><strong>Abstracto</strong>: pinceladas generativas impulsadas por la voz.</li>
-        </ul>
+          <h1 class="hero-title">
+            Paisaje del Ánimo
+          </h1>
+          <p class="hero-subtitle">
+            Un paisaje collage generado por tu voz.
+          </p>
 
-        <h3>Objetivos</h3>
-        <ul class="bullets">
-          <li>Explorar identidad sonora y visual.</li>
-          <li>Diseñar una UI mínima, clara y accesible.</li>
-          <li>Generar capturas exportables (PNG) como bitácora visual.</li>
-        </ul>
+          <p class="hero-text">
+            <strong>Paisaje del Ánimo</strong> es un autorretrato interactivo donde
+            <strong>voz</strong> y <strong>respiración</strong> construyen un mundo visual.
+            El micrófono escucha tu energía sonora y la traduce en
+            <span class="highlight">formas</span> que cambian de color según la paleta elegida.
+          </p>
 
-        <h3>Requerimientos</h3>
-        <ul class="bullets">
-          <li>p5.js + p5.sound</li>
-          <li>Micrófono (opcional, tiene “Modo demo”)</li>
-          <li>Navegador en <em>localhost</em> o HTTPS para permisos de mic</li>
-        </ul>
+          <div class="hero-steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <div class="step-body">
+                <h3>Hablá o respira&aacute; cerca del microfono</h3>
+                <p>El volumen y el ritmo del sonido crean nuevas piezas en el paisaje.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <div class="step-body">
+                <h3>Mirá cómo cambia el entorno</h3>
+                <p>El silencio reconfigura el mundo; la voz lo llena de color.</p>
+              </div>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <div class="step-body">
+                <h3>Guardá tu captura</h3>
+                <p>Cada sesión puede terminar en una imagen PNG única.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <button id="abrirObra" class="btn-primary">
+              Empezar a crear paisaje
+            </button>
+            <p class="helper-text">
+              Al entrar, el navegador puede pedir permiso para usar el micrófono.
+            </p>
+          </div>
+        </section>
+
+        <section class="hero-panel">
+          <div class="bubble-header">
+            <div class="bubble-icon">
+              <span class="bubble-wave"></span>
+            </div>
+            <div class="bubble-text">
+              <span class="bubble-title">Sobre la obra</span>
+              <span class="bubble-subtitle">Identidad sonora hecha paisaje</span>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h2>Concepto</h2>
+            <p>
+              Cada persona “suena” distinto. En esta obra, la amplitud del audio genera recortes
+              de diferentes formas. Podés elegir entre una atmósfera de 
+              <strong>Calma</strong> (tonos fríos) o <strong>Energía</strong> (tonos cálidos).
+            </p>
+
+            <h2>Dinámica</h2>
+            <ul class="panel-list">
+              <li>
+                <span class="dot"></span>
+                <strong>Voz:</strong> Agrega elementos al collage.
+              </li>
+              <li>
+                <span class="dot"></span>
+                <strong>Silencio:</strong> Cuando dejás de hablar, el paisaje se reconfigura
+              </li>
+              <li>
+                <span class="dot"></span>
+                <strong>Mouse:</strong> Podés agregar detalles manuales sobre el lienzo.
+              </li>
+            </ul>
+
+            <h2>Controles rápidos</h2>
+            <ul class="shortcut-list">
+              <li><span class="key">P</span> Pausar / Reanudar</li>
+              <li><span class="key">S</span> Guardar PNG</li>
+              <li><span class="key">Q</span> Terminar obra</li>
+              <li><span class="key">R</span> Borrar todo</li>
+              <li><span class="key">C</span> Cambiar paleta</li>
+              <li><span class="key">H</span> Mostrar / Ocultar info</li>
+            </ul>
+
+            <p class="credits">
+              Diseño &amp; desarrollo — <strong>Candela Rivas</strong>. Biblioteca — <strong>p5.js</strong>.
+            </p>
+          </div>
+        </section>
       </div>
+    </header>
 
-      <div>
-        <h2>Moodboard</h2>
-        <div class="moodboard">
-          <div class="mbox">ondas</div>
-          <div class="mbox">acuarelas</div>
-          <div class="mbox">ruido perlin</div>
-          <div class="mbox">paleta calma</div>
-          <div class="mbox">paleta energía</div>
-          <div class="mbox">líneas fluidas</div>
-        </div>
+    <footer class="site-footer" aria-label="Créditos del sitio">
+      <span>CREADO POR CANDELA RIVAS · PAISAJE DEL ÁNIMO · 2025</span>
+    </footer>
+  </div>
 
-        <h3>Atajos</h3>
-        <ul class="bullets">
-          <li><strong>P</strong>: Pausar/Reanudar</li>
-          <li><strong>S</strong>: Guardar PNG</li>
-          <li><strong>Q</strong>: Terminar obra</li>
-          <li><strong>R</strong>: Borrar capa persistente</li>
-          <li><strong>C</strong>: Cambiar paleta</li>
-          <li><strong>H</strong>: Mostrar/Ocultar HUD</li>
-        </ul>
-      </div>
-    </section>
-
-    <div class="cta">
-      <button id="abrirObra" class="btn">Abrir obra</button>
-      <small class="credits">
-        Créditos: Diseño &amp; desarrollo — <em>Tu nombre</em>. Biblioteca: p5.js.
-      </small>
-    </div>
-  </header>
-
-  <!-- Contenedor del lienzo p5 (se muestra al abrir la obra) -->
-  <main id="app" class="app oculto"><!-- p5 inyecta el canvas y la UI --></main>
-
-  <!-- Footer del sitio -->
-  <footer class="site-footer" aria-label="Créditos del sitio">
-    <span>CREADO POR CANDELA RIVAS</span>
-  </footer>
+  <!-- MAIN APP FUERA DEL SHELL PARA QUE OCUPE EL 100% DE ANCHO -->
+  <main id="app" class="app oculto">
+  </main>
 
   <script src="sketch.js"></script>
   <script>
-    // Mostrar/ocultar la obra desde la landing
     const btn = document.getElementById('abrirObra');
-    const landing = document.querySelector('.landing');
+    const shell = document.querySelector('.page-shell'); 
     const app = document.getElementById('app');
+    
+    // Entrar a la obra
     btn.addEventListener('click', () => {
-      landing.classList.add('oculto');
+      shell.classList.add('oculto');
       app.classList.remove('oculto');
-      // Aviso al sketch que arranque en estado "intro"
       window.__arrancarSketch && window.__arrancarSketch();
     });
+
+    // Función global para volver a la pantalla de bienvenida
+    // (llamala desde el botón "Volver a inicio" que agregues en el sketch)
+    window.__volverAlInicio = function () {
+      // si tenés una función en sketch.js para frenar el loop,
+      // la podés enganchar acá:
+      if (window.__detenerSketch) {
+        window.__detenerSketch();
+      }
+
+      app.classList.add('oculto');
+      shell.classList.remove('oculto');
+      // opcional: volver arriba de todo
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
   </script>
 </body>
 </html>
